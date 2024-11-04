@@ -1,0 +1,78 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f7f7f7;
+  padding-bottom: 60px; /* Para evitar sobreposição com o botão fixo */
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+  margin: 20px 0;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  color: #444;
+  font-size: 16px;
+  margin: 0;
+}
+
+#selecionar-todos {
+  margin-bottom: 16px;
+  transform: scale(1.3);
+}
+
+#lista-pessoas {
+  list-style: none;
+  padding: 0;
+  width: 90%;
+  max-width: 400px;
+  margin-bottom: 60px; /* Espaço extra para o botão fixo */
+}
+
+#lista-pessoas li {
+  display: flex;
+  align-items: center;
+  height: 30px;
+  background-color: #ffffff;
+  padding: 10px;
+  margin-bottom: 8px;
+  border-radius: 8px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  font-size: 16px;
+  color: #333;
+  cursor: pointer;
+}
+
+#lista-pessoas input[type="checkbox"] {
+  margin-right: 10px;
+  transform: scale(1.2);
+}
+
+/* Estilo para o botão fixo */
+button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  position: fixed;
+  bottom: 10px;
+  width: 90%;
+  max-width: 400px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+button:hover {
+  background-color: #45a049;
+}

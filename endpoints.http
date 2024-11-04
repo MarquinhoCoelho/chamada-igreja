@@ -1,0 +1,26 @@
+###
+GET http://localhost:3333/chamadas/email/mvscmarcos@gmail.com
+
+###
+
+GET http://localhost:3333/chamadas/semana-passada
+
+###
+
+POST http://localhost:3333/chamadas
+Content-Type: application/json
+
+[
+  {
+    "nome": "Bruna Sartori",
+    "veio": true
+  },
+  {
+    "nome": "Rose",
+    "veio": true
+  }
+]
+
+###
+
+DELETE http://localhost:3333/chamadas/DELETAR

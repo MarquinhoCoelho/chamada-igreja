@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chamada Estreito</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <h1>Lista de Chamada</h1>
+
+  <label for="selecionar-todos">Selecionar Todos</label>
+  <input type="checkbox" id="selecionar-todos" onclick="toggleSelecionarTodos()">
+  
+  <ul id="lista-pessoas"></ul>
+
+  <button id="botao-enviar"  onclick="enviarChamadas()">Enviar Chamada</button>
+
+  <script>
+    function toggleSelecionarTodos() {
+      const checkboxes = document.querySelectorAll('.checkbox-visitante');
+      const selecionarTodos = document.getElementById('selecionar-todos').checked;
+
+      checkboxes.forEach(checkbox => {
+        checkbox.checked = selecionarTodos;
+      });
+    }
+
+    const pessoas = [
+      { nome: "DIÁCONO ISRAEL TOMAZ"},
+      { nome: "ÁGATA DOS ANJOS BARBI"},
+      { nome: "ALBA DOS ANJOS BARBI"},
+      { nome: "ALEXANDRA ROCHA CRISPIM TOMAZ"},
+      { nome: "ANDERSON RODRIGO RIBEIRO DA SILVA"},
+      { nome: "ARTUR RAVANELLO SILVA"},
+      { nome: "AYSLA EMANUELI ZEFERINO DOS SANTOS"},
+      { nome: "BRUNNA DE KÁCIA SOUZA COELHO"},
+      { nome: "CALEB EMANUEL SOUZA SANTOS"},
+      { nome: "CAUÃ MIGUEL SOUZA SANTOS"},
+      { nome: "CLÁUDIO CESAR DA SILVA SANTOS"},
+      { nome: "FÁBIO OTÁVIO CARDOSO DA COSTA"},
+      { nome: "FILIPE ANTUNES EMERICK"},
+      { nome: "GABRIEL RAVANELLO SILVA"},
+      { nome: "HELENA ANTUNES EMERICK"},
+      { nome: "HELENA ROCHA TOMAZ"},
+      { nome: "ILDA TERESINHA RAVANELLO SILVA"},
+      { nome: "IRANI BARBI DA SILVA"},
+      { nome: "ISAQUE ROCHA TOMAZ"},
+      { nome: "JOAO ROCHA TOMAZ"},
+      { nome: "JOSUÉ CARDOSO EMERICK"},
+      { nome: "KALEL FELIPE SOUZA SANTOS"},
+      { nome: "KÁTIA LÍGIA DE ANDRADE ALBUQUERQUE"},
+      { nome: "KEIDE CORREA ANTUNES EMERICK"},
+      { nome: "MARCOS VINICIUS SILVA COELHO"},
+      { nome: "MARIA JOSÉ PEREIRA REIS"},
+      { nome: "MARIA LUIZA PEREIRA REIS"},
+      { nome: "NAYANNE GUEDES DA FONSECA"},
+      { nome: "NICOLE PEREIRA CARDOSO DA COSTA"},
+      { nome: "PATRÍCIA LUANA PEREIRA CARDOSO DA COSTA"},
+      { nome: "RODRIGO MATOS MARQUES"},
+      { nome: "SAMUEL ROCHA TOMAZ"},
+      { nome: "SARAH LÍGIA DE ANDRADE ALBUQUERQUE"},
+      { nome: "SHEILA FERREIRA SOUZA SANTOS"},
+      { nome: "SORAIA DE OLIVEIRA RIBEIRO"},
+      { nome: "ZOÉ SERGIO BALBINOT"},
+      { nome: "DIÁCONO WALLACE A. DE CASTRO LEITE"},
+      { nome: "ADRIELE RIBEIRO DA SILVA"},
+      { nome: "ALBA MARIA DE OLIVEIRA MENEZES"},
+      { nome: "ALDA MADALENA DE OLIVEIRA COSTA"},
+      { nome: "ANA BEATRIZ SARDINHA CHAVES ANJOS"},
+      { nome: "ANA HELENA MATTOS DE SOUZA"},
+      { nome: "ANA PAULA BATISTA TEIXEIRA"},
+      { nome: "BRUNA SARTORI DA SILVA"},
+      { nome: "CLAUDIA CASCAES FIGUEIREDO"},
+      { nome: "DAVI BOBADILLA"},
+      { nome: "DAVI BOMFA BOMFIM"},
+      { nome: "DELIR SCHLOSSER"},
+      { nome: "EDICARLOS CARDOSO DA COSTA"},
+      { nome: "ELLEN FIGUEIREDO DA SILVA"},
+      { nome: "EMANUELLE CERQUEIRA MENESES"},
+      { nome: "ETORI CRISTIANO RODRIGUES DOS SANTOS"},
+      { nome: "GABRIELA DE OLIVEIRA CASTRO"},
+      { nome: "GILVAN ROGERIO BELEGANTE"},
+      { nome: "GUILHERME CASCAES FIGUEIREDO"},
+      { nome: "IEDA CRISTINA LOPES"},
+      { nome: "JAIMER FARIAS"},
+      { nome: "JASIANE BATISTA DE CERQUEIRA"},
+      { nome: "JOSE MARIA CARVALHO MENESES"},
+      { nome: "JULIANA GOMES BOBADILLA"},
+      { nome: "KARLA PEREIRA BELEGANTE"},
+      { nome: "LUCAS VENTURA RIBEIRO"},
+      { nome: "LUISA BELEGANTE"},
+      { nome: "MARIA GORETTI GOMES"},
+      { nome: "ROSANGELA NATÁLIA MARTINS"},
+      { nome: "THOBIAS GOMES BOBADILLA"},
+      { nome: "VILMAR AMADEU DA CUNHA"}
+    ];
+
+    function gerarListaPessoas() {
+      const listaContainer = document.getElementById('lista-pessoas');
+      listaContainer.innerHTML = '';
+
+      pessoas.forEach((pessoa, index) => {
+        const listItem = document.createElement('li');
+
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.className = 'checkbox-visitante';
+        checkbox.id = `pessoa-${index}`;
+        checkbox.value = pessoa.nome;
+
+        const label = document.createElement('label');
+        label.htmlFor = `pessoa-${index}`;
+        label.textContent = pessoa.nome;
+
+        listItem.onclick = () => {
+          checkbox.checked = !checkbox.checked;
+        };
+
+        listItem.appendChild(checkbox);
+        listItem.appendChild(label);
+        listaContainer.appendChild(listItem);
+      });
+    }
+
+    function adicionarVisitante() {
+      const inputVisitante = document.getElementById('novo-visitante');
+      const nomeVisitante = inputVisitante.value.trim();
+
+      if (nomeVisitante === '') {
+        alert('Por favor, insira um nome válido.');
+        return;
+      }
+
+      pessoas.push({ nome: nomeVisitante });
+      inputVisitante.value = '';
+      gerarListaPessoas();
+    }
+
+    async function enviarChamadas() {
+      const chamadas = pessoas.map((pessoa, index) => ({
+        nome: pessoa.nome,
+        veio: document.getElementById(`pessoa-${index}`).checked
+      }));
+
+      const botaoEnviar = document.getElementById('botao-enviar');
+      botaoEnviar.style.display = 'none'
+
+      try {
+        const response = await fetch('http://localhost:3333/chamadas', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(chamadas)
+        });
+
+        botaoEnviar.style.display = 'block'
+        alert('E-mail com a lista de presença enviado ao pastor!');
+        toggleSelecionarTodos();
+        console.log('Chamadas enviadas:', await response.json());
+      } catch (error) {
+        botaoEnviar.value = 'Enviar Chamada';
+        botaoEnviar.disabled = false;
+
+        console.error('Erro ao enviar as chamadas:', error);
+      }
+    }
+
+    async function getChamadasSemanaPassada() {
+      try {
+        const response = await fetch('http://localhost:3333/chamadas/semana-passada');
+        console.log('Chamadas da Semana Passada:', await response.json());
+      } catch (error) {
+        console.error('Erro ao obter as chamadas da semana passada:', error);
+      }
+    }
+
+    async function enviarEmailSemanal() {
+      try {
+        const response = await fetch('http://localhost:3333/chamadas/email/mvscmarcos@gmail.com');
+        const data = await response.json();
+        console.log('E-mail semanal enviado:', data);
+
+        await deletarChamadas();
+      } catch (error) {
+        console.error('Erro ao enviar o e-mail semanal:', error);
+      }
+    }
+
+    async function enviarEmailDiario() {
+      try {
+        const email = 'mvscmarcos@gmail.com';
+        const data = new Date().toISOString().split('T')[0]; // 'YYYY-MM-DD'
+        
+        const response = await fetch(`http://localhost:3333/chamadas/email/${email}/${data}`);
+        const result = await response.json();
+        
+        console.log('E-mail diário enviado:', result);
+        alert('E-mail com a lista de presença enviado ao pastor!')
+      } catch (error) {
+        console.error('Erro ao enviar o e-mail diário:', error);
+      }
+    }
+
+    async function deletarChamadas() {
+      try {
+        const response = await fetch('http://localhost:3333/chamadas/DELETAR', { method: 'DELETE' });
+        console.log('Chamadas deletadas:', await response.json());
+      } catch (error) {
+        console.error('Erro ao deletar as chamadas:', error);
+      }
+    }
+
+    window.onload = gerarListaPessoas;
+  </script>
+</body>
+</html>
